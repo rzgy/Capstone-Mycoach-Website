@@ -10,6 +10,7 @@ import { Alert } from "@mui/material";
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [showFailed, setShowFailed] = useState(false);
   const [coachInfo, setCoachInfo] = useState({
     email: "",
     password: "",
@@ -41,7 +42,11 @@ function App() {
     },
     onError: () => {
       <Alert severity="error">Your registeration was not successful.</Alert>;
+      setShowFailed(true);
       setIsLoading(false);
+      setTimeout(() => {
+        setShowFailed(false);
+      }, 4000);
     },
   });
 
@@ -189,11 +194,20 @@ function App() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-            {show && (
-              <Alert severity="success">
-                Your registration was successful.
-              </Alert>
-            )}
+            <div className="mb-4">
+              {show && (
+                <Alert severity="success">
+                  Your registration was successful.
+                </Alert>
+              )}
+            </div>
+            <div className="mb-4">
+              {showFailed && (
+                <Alert severity="error">
+                  Your registeration was not successful!
+                </Alert>
+              )}
+            </div>
             <button
               onClick={handleFormSubmit}
               type="submit"
